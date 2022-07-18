@@ -1,5 +1,6 @@
 package com.datasite;
 
+import javax.swing.plaf.TableHeaderUI;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -49,8 +50,13 @@ public class Main {
             System.out.println("Trying to connect...");
             Socket socket = new Socket(ip, 1024);
             System.out.println("Successfully connected to the server.");
-            System.setIn(socket.getInputStream());
-            System.setOut(new PrintStream(socket.getOutputStream()));
+            socket.getInputStream().transferTo(System.out);
+
+            try {
+                Thread.sleep(100000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
