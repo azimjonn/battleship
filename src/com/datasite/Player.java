@@ -21,49 +21,51 @@ public class Player extends Thread{
 
     @Override
     public void run() {
-        synchronized (game) {
-            while (game.turn != id) {
-                try {
-                    game.wait();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+        while (true) {
+            synchronized (game) {
+                while (game.turn != id) {
+                    try {
+                        game.wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
-        }
 
-        try {
-            wr.write(game.board[0].toString());
-            wr.write("\n");
-            wr.write(game.board[1].toString());
-            wr.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            try {
+                wr.write(game.board[0].toString());
+                wr.write("\n");
+                wr.write(game.board[1].toString());
+                wr.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-        try {
-            wr.write("Enter xy: ");
-            wr.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        int x, y;
-        x = sc.nextInt();
-        y = sc.nextInt();
+            try {
+                wr.write("Enter xy: ");
+                wr.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            int x, y;
+            x = sc.nextInt();
+            y = sc.nextInt();
 
-        game.board[(id - 1) ^ 1].hit(x, y);
+            game.board[(id - 1) ^ 1].hit(x, y);
 
-        try {
-            wr.write(game.board[0].toString());
-            wr.write("\n");
-            wr.write(game.board[1].toString());
-            wr.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            try {
+                wr.write(game.board[0].toString());
+                wr.write("\n");
+                wr.write(game.board[1].toString());
+                wr.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-        game.turn = game.turn == 1 ? 2 : 1;
-        synchronized (game) {
-            game.notify();
+            game.turn = game.turn == 1 ? 2 : 1;
+            synchronized (game) {
+                game.notify();
+            }
         }
     }
 }
