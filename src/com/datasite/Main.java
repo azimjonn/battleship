@@ -51,6 +51,7 @@ public class Main {
             Socket socket = new Socket(ip, 1024);
             System.out.println("Successfully connected to the server.");
             System.out.println(System.in.transferTo(socket.getOutputStream()));
+            System.out.println("in transferred");
             socket.getInputStream().transferTo(System.out);
 
 
