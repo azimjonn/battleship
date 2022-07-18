@@ -62,6 +62,8 @@ public class Player extends Thread{
         }
 
         game.turn = game.turn == 1 ? 2 : 1;
-        game.notify();
+        synchronized (game) {
+            game.notify();
+        }
     }
 }

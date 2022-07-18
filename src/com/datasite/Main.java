@@ -39,7 +39,9 @@ public class Main {
             player1.start();
             player2.start();
 
-            game.notifyAll();
+            synchronized (game) {
+                game.notifyAll();
+            }
         } else {
             System.out.print("Enter local server IP address: ");
             String ip = sc.next();
