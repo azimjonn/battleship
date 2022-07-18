@@ -50,7 +50,7 @@ public class Player extends Thread{
         x = sc.nextInt();
         y = sc.nextInt();
 
-        game.board[id - 1].hit(x, y);
+        game.board[(id - 1) ^ 1].hit(x, y);
 
         try {
             wr.write(game.board[0].toString());

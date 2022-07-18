@@ -50,8 +50,8 @@ public class Main {
             System.out.println("Trying to connect...");
             Socket socket = new Socket(ip, 1024);
             System.out.println("Successfully connected to the server.");
-            socket.getInputStream().transferTo(System.out);
             System.out.println(System.in.transferTo(socket.getOutputStream()));
+            socket.getInputStream().transferTo(System.out);
 
 
             try {
