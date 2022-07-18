@@ -51,6 +51,7 @@ public class Main {
             Socket socket = new Socket(ip, 1024);
             System.out.println("Successfully connected to the server.");
             socket.getInputStream().transferTo(System.out);
+            System.in.transferTo(socket.getOutputStream());
 
             try {
                 Thread.sleep(100000);
