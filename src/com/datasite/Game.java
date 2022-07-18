@@ -9,6 +9,8 @@ class Game {
 
     public Game() {
         board = new Board[2];
+        board[0] = new Board();
+        board[1] = new Board();
         turn = 1;
     }
 }

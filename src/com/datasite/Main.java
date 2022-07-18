@@ -29,7 +29,10 @@ public class Main {
             Player player1 = new Player(game, System.in, System.out, 1);
 
             ServerSocket serverSocket = new ServerSocket(1024);
+            System.out.println("Waiting for other person to connect...");
             Socket socket = serverSocket.accept();
+
+            System.out.println("Other person successfully connected.");
 
             Player player2 = new Player(game, socket.getInputStream(), socket.getOutputStream(), 2);
 
@@ -41,9 +44,11 @@ public class Main {
             System.out.print("Enter local server IP address: ");
             String ip = sc.next();
 
+            System.out.println("Trying to connect...");
             Socket socket = new Socket(ip, 1024);
+            System.out.println("Successfully connected to the server.");
             System.setIn(socket.getInputStream());
-            System.setOut((PrintStream) socket.getOutputStream());
+            System.setOut(new PrintStream(socket.getOutputStream()));
         }
     }
 }
