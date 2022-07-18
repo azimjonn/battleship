@@ -53,7 +53,6 @@ public class Main {
 
 
             socket.getInputStream().transferTo(System.out);
-            System.out.println("in transferred");
 
             System.out.println(System.in.transferTo(socket.getOutputStream()));
         }

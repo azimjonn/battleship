@@ -49,6 +49,7 @@ public class Player extends Thread{
             }
             int x, y;
             x = sc.nextInt();
+            System.out.println("got x");
             y = sc.nextInt();
 
             game.board[(id - 1) ^ 1].hit(x, y);
