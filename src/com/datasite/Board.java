@@ -33,8 +33,7 @@ public class Board {
         } while (!isValid());
     }
 
-    @Override
-    public String toString() {
+    public String toString(boolean revealed) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("   ");
         for (int i = 0; i < 10; i++)
@@ -51,8 +50,12 @@ public class Board {
                         stringBuilder.append("@  ");
                 }
                 else {
-                    if (ship.isAliveXY(i, j))
-                        stringBuilder.append("O  ");
+                    if (ship.isAliveXY(i, j)) {
+                        if (revealed)
+                            stringBuilder.append("O  ");
+                        else
+                            stringBuilder.append("*  ");
+                    }
                     else
                         stringBuilder.append("X  ");
                 }

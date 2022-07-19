@@ -24,7 +24,7 @@ public class Main {
 
         if (option == 1) {
             Game game = new Game();
-            Player player1 = new Player(game, System.in, System.out, 1);
+            Player player1 = new Player(game, System.in, System.out, 0);
 
             ServerSocket serverSocket = new ServerSocket(1024);
             System.out.println("Waiting for other person to connect...");
@@ -32,7 +32,7 @@ public class Main {
 
             System.out.println("Other person successfully connected.");
 
-            Player player2 = new Player(game, socket.getInputStream(), socket.getOutputStream(), 2);
+            Player player2 = new Player(game, socket.getInputStream(), socket.getOutputStream(), 1);
 
             player1.start();
             player2.start();
@@ -51,10 +51,11 @@ public class Main {
 
             socket.getInputStream().transferTo(System.out);
 
-//            System.out.println(System.in.transferTo(socket.getOutputStream()));
             OutputStream outputStream = socket.getOutputStream();
+            System.out.println("56");
             while (true) {
                 outputStream.write(System.in.read());
+                System.out.println("58");
                 outputStream.flush();
             }
         }

@@ -33,9 +33,8 @@ public class Player extends Thread{
             }
 
             try {
-                wr.write(game.board[0].toString());
+                wr.write(concat(game.board[id].toString(true), game.board[id ^ 1].toString(false)));
                 wr.write("\n");
-                wr.write(game.board[1].toString());
                 wr.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -52,21 +51,34 @@ public class Player extends Thread{
             System.out.println("got x");
             y = sc.nextInt();
 
-            game.board[(id - 1) ^ 1].hit(x, y);
+            game.board[id ^ 1].hit(x, y);
 
             try {
-                wr.write(game.board[0].toString());
+                wr.write(concat(game.board[id].toString(true), game.board[id ^ 1].toString(false)));
                 wr.write("\n");
-                wr.write(game.board[1].toString());
                 wr.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            game.turn = game.turn == 1 ? 2 : 1;
+            game.turn = game.turn ^ 1;
             synchronized (game) {
                 game.notify();
             }
         }
+    }
+
+    public static String concat(String a, String b) {
+        Scanner scA = new Scanner(a);
+        Scanner scB = new Scanner(b);
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while (scA.hasNextLine()) {
+            stringBuilder.append(scA.nextLine());
+            stringBuilder.append(scB.nextLine());
+        }
+
+        return new String(stringBuilder);
     }
 }
