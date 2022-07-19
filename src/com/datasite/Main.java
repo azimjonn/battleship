@@ -1,10 +1,7 @@
 package com.datasite;
 
 import javax.swing.plaf.TableHeaderUI;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -54,7 +51,12 @@ public class Main {
 
             socket.getInputStream().transferTo(System.out);
 
-            System.out.println(System.in.transferTo(socket.getOutputStream()));
+//            System.out.println(System.in.transferTo(socket.getOutputStream()));
+            OutputStream outputStream = socket.getOutputStream();
+            while (true) {
+                outputStream.write(System.in.read());
+                outputStream.flush();
+            }
         }
     }
 }
