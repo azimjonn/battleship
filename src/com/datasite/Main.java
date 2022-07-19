@@ -60,10 +60,9 @@ public class Main {
             }.start();
 
             OutputStream outputStream = socket.getOutputStream();
-            System.out.println("56");
+
             while (true) {
                 outputStream.write(System.in.read());
-                System.out.println("58");
                 outputStream.flush();
             }
         }

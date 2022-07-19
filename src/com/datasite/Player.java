@@ -48,7 +48,6 @@ public class Player extends Thread{
             }
             int x, y;
             x = sc.nextInt();
-            System.out.println("got x");
             y = sc.nextInt();
 
             game.board[id ^ 1].hit(x, y);
@@ -76,6 +75,7 @@ public class Player extends Thread{
 
         while (scA.hasNextLine()) {
             stringBuilder.append(scA.nextLine());
+            stringBuilder.append("          ");
             stringBuilder.append(scB.nextLine());
             stringBuilder.append('\n');
         }
