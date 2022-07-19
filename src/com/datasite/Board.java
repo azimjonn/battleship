@@ -47,7 +47,7 @@ public class Board {
                     if (matrix[i][j])
                         stringBuilder.append("*  ");
                     else
-                        stringBuilder.append("@  ");
+                        stringBuilder.append("X  ");
                 }
                 else {
                     if (ship.isAliveXY(i, j)) {
@@ -57,7 +57,7 @@ public class Board {
                             stringBuilder.append("*  ");
                     }
                     else
-                        stringBuilder.append("X  ");
+                        stringBuilder.append("@  ");
                 }
             }
             stringBuilder.append('\n');
