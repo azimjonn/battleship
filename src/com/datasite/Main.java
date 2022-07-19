@@ -59,12 +59,7 @@ public class Main {
                 }
             }.start();
 
-            OutputStream outputStream = socket.getOutputStream();
-
-            while (true) {
-                outputStream.write(System.in.read());
-                outputStream.flush();
-            }
+            System.in.transferTo(socket.getOutputStream());
         }
     }
 }
