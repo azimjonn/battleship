@@ -76,7 +76,6 @@ public class Player extends Thread{
 
         while (scA.hasNextLine()) {
             stringBuilder.append(scA.nextLine());
-            stringBuilder.append('\n');
             stringBuilder.append(scB.nextLine());
             stringBuilder.append('\n');
         }
