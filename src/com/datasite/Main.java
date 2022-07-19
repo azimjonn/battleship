@@ -48,8 +48,16 @@ public class Main {
             Socket socket = new Socket(ip, 1024);
             System.out.println("Successfully connected to the server.");
 
-
-            socket.getInputStream().transferTo(System.out);
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        socket.getInputStream().transferTo(System.out);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }.start();
 
             OutputStream outputStream = socket.getOutputStream();
             System.out.println("56");
