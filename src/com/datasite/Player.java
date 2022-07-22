@@ -42,6 +42,8 @@ public class Player extends Thread{
                 }
             }
 
+            if (game.winner == -1) break;
+
            printState();
 
             try {
