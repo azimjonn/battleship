@@ -101,9 +101,9 @@ public class Board {
     }
 
     public boolean isLost() {
-        boolean isLost = false;
+        boolean isLost = true;
         for (Ship ship : navy) {
-            isLost = isLost || ship.isSank();
+            isLost = isLost && ship.isSank();
         }
 
         return isLost;

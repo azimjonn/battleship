@@ -83,8 +83,7 @@ public class Main {
             try {
                 t1.join();
                 t2.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            } catch (InterruptedException ignored) {
             }
         }
     }
