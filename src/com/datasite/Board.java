@@ -99,4 +99,13 @@ public class Board {
 
         return true;
     }
+
+    public boolean isLost() {
+        boolean isLost = false;
+        for (Ship ship : navy) {
+            isLost = isLost || ship.isSank();
+        }
+
+        return isLost;
+    }
 }

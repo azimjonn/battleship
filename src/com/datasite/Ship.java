@@ -108,6 +108,7 @@ public class Ship {
             content[ty - y] = false;
         else
             content[tx - x] = false;
+        workingSize--;
 
         return true;
     }

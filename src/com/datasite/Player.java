@@ -19,9 +19,19 @@ public class Player extends Thread{
         this.id = id;
     }
 
+    private void printState() {
+        try {
+            wr.write(concat(game.board[id].toString(true), game.board[id ^ 1].toString(false)));
+            wr.write("\n");
+            wr.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void run() {
-        while (true) {
+        while (game.winner != -1) {
             synchronized (game) {
                 while (game.turn != id) {
                     try {
@@ -32,13 +42,7 @@ public class Player extends Thread{
                 }
             }
 
-            try {
-                wr.write(concat(game.board[id].toString(true), game.board[id ^ 1].toString(false)));
-                wr.write("\n");
-                wr.flush();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+           printState();
 
             try {
                 wr.write("Enter xy: ");
@@ -52,17 +56,30 @@ public class Player extends Thread{
 
             game.board[id ^ 1].hit(x, y);
 
-            try {
-                wr.write(concat(game.board[id].toString(true), game.board[id ^ 1].toString(false)));
-                wr.write("\n");
-                wr.flush();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            printState();
+
+            if (game.board[id ^ 1].isLost()) {
+                game.winner = id;
             }
 
             game.turn = game.turn ^ 1;
             synchronized (game) {
                 game.notify();
+            }
+        }
+
+        synchronized (game) {
+            try {
+                if (game.winner == id) {
+                    wr.write("You won the game.");
+                } else {
+                    wr.write("You lost the game.");
+                }
+                wr.flush();
+                wr.close();
+                sc.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

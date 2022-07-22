@@ -1,6 +1,5 @@
 package com.datasite;
 
-import javax.swing.plaf.TableHeaderUI;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -40,6 +39,17 @@ public class Main {
             synchronized (game) {
                 game.notifyAll();
             }
+
+            try {
+                player1.join();
+                player2.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            socket.close();
+            serverSocket.close();
+
         } else {
             System.out.print("Enter local server IP address: ");
             String ip = sc.next();
@@ -48,18 +58,34 @@ public class Main {
             Socket socket = new Socket(ip, 1024);
             System.out.println("Successfully connected to the server.");
 
-            new Thread() {
+            Thread t1 = new Thread() {
                 @Override
                 public void run() {
                     try {
                         socket.getInputStream().transferTo(System.out);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    } catch (IOException ignored) {
                     }
                 }
-            }.start();
+            };
 
-            System.in.transferTo(socket.getOutputStream());
+            Thread t2 = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        System.in.transferTo(socket.getOutputStream());
+                    } catch (IOException ignored) {
+                    }
+                }
+            };
+
+            t1.start();
+            t2.start();
+            try {
+                t1.join();
+                t2.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
