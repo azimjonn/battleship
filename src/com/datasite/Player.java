@@ -31,7 +31,7 @@ public class Player extends Thread{
 
     @Override
     public void run() {
-        while (game.winner != -1) {
+        while (game.winner == -1) {
             synchronized (game) {
                 while (game.turn != id) {
                     try {
